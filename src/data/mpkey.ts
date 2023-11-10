@@ -1,0 +1,1 @@
+export const  MP_ACCES_TOKEN = process.env.TZ
