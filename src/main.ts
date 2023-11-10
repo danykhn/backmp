@@ -9,6 +9,6 @@ async function bootstrap() {
     //origin: ['https://app.miclinicamedica.com.ar/', 'http://app.miclinicamedica.com.ar/']
   });
 
-  await app.listen((process.env.PORT, '0.0.0.0'));
+  await app.listen((process.env.PORT, '0.0.0.0',`server on ${process.env.PORT}` ));
 }
 bootstrap();
