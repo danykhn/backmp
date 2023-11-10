@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as process from 'process'
+import { Logger } from '@nestjs/common';
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   app.enableCors({
@@ -8,7 +9,7 @@ async function bootstrap() {
     methods: '*',
     //origin: ['https://app.miclinicamedica.com.ar/', 'http://app.miclinicamedica.com.ar/']
   });
-
-  await app.listen((process.env.PORT, '0.0.0.0',`server on ${process.env.PORT}` ));
+  const PORT = process.env.port || 3091;
+  await app.listen(PORT, () => Logger.log(`Server started on http://localhost:${PORT}/api/doc`));
 }
 bootstrap();
