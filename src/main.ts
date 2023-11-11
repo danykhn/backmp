@@ -9,7 +9,7 @@ async function bootstrap() {
     methods: '*',
     //origin: ['https://app.miclinicamedica.com.ar/', 'http://app.miclinicamedica.com.ar/']
   });
-  const PORT = process.env.port || 3091;
+  const PORT = process.env.port || 3075;
   await app.listen(PORT);
 }
 bootstrap();
