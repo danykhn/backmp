@@ -7,9 +7,9 @@ async function bootstrap() {
   app.enableCors({
     credentials: true,
     methods: '*',
-    //origin: ['https://app.miclinicamedica.com.ar/', 'http://app.miclinicamedica.com.ar/']
+    origin: ['https://s3.miclinicamedica.com.ar/', 'https://s3.miclinicamedica.com.ar/']
   });
   const PORT = process.env.port || 3075;
-  await app.listen(PORT);
+  await app.listen(`Server on ${PORT}`);
 }
 bootstrap();
