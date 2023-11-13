@@ -13,7 +13,7 @@ export class MercadoPagoController{
  @Post('payment')
  async payment(){
 console.log(MP_ACCES_TOKEN)
-const client = new MercadoPagoConfig({ accessToken: MP_ACCES_TOKEN, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+const client = new MercadoPagoConfig({ accessToken: 'TEST-7415360770932185-110116-cb9001ef2a5600f3bd4be96dd84bd1ec-1532962952', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 
 //#region crear contacto
 // const customerClient = new Customer(client);
@@ -67,7 +67,7 @@ return respGet
  @Post('suscribirMercadoPago')
  async suscribirMercadoPago(@Body() data:mpFormData){
 console.log(data)
-	const client = new MercadoPagoConfig({ accessToken: MP_ACCES_TOKEN, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+	const client = new MercadoPagoConfig({ accessToken: 'TEST-7415360770932185-110116-cb9001ef2a5600f3bd4be96dd84bd1ec-1532962952', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 	const preApproval = new PreApproval(client);
 
 const res = await preApproval.create({ body: {	
@@ -93,7 +93,7 @@ const res = await preApproval.create({ body: {
  @Post('crearPlanMercadoPago')
  async crearPlanMercadoPago(@Body() data: planMp){
 
-	const client = new MercadoPagoConfig({ accessToken: MP_ACCES_TOKEN, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+	const client = new MercadoPagoConfig({ accessToken: 'TEST-7415360770932185-110116-cb9001ef2a5600f3bd4be96dd84bd1ec-1532962952', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 
 	const preApprovalPlan = new PreApprovalPlan(client);
 	let datas = {}
@@ -116,7 +116,7 @@ const res = await preApproval.create({ body: {
 @Get('getPlansMercadoPago')
  async planesnMercadoPago(){
 	//Conexion
-	const client = new MercadoPagoConfig({ accessToken: MP_ACCES_TOKEN, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+	const client = new MercadoPagoConfig({ accessToken: 'TEST-7415360770932185-110116-cb9001ef2a5600f3bd4be96dd84bd1ec-1532962952', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 	//Entidad
 	const preApprovalPlanGet = new PreApprovalPlan(client);
 
@@ -134,7 +134,7 @@ const res = await preApproval.create({ body: {
  @Put('editPlansMercadoPago')
  async editarPlanMercadoPago(){
 	//Conexion
-	const client = new MercadoPagoConfig({ accessToken: MP_ACCES_TOKEN, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+	const client = new MercadoPagoConfig({ accessToken: 'TEST-7415360770932185-110116-cb9001ef2a5600f3bd4be96dd84bd1ec-1532962952', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 	//Entidad
 	const preApprovalPlanGet = new PreApprovalPlan(client);
 
@@ -158,7 +158,7 @@ const res = await preApproval.create({ body: {
 
  @Post('crearClienteMercadoPago')
  async crearCliente(){
-	const client = new MercadoPagoConfig({ accessToken: MP_ACCES_TOKEN, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+	const client = new MercadoPagoConfig({ accessToken: 'TEST-7415360770932185-110116-cb9001ef2a5600f3bd4be96dd84bd1ec-1532962952', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 	const customerClient = new Customer(client);
 
 	const body = {
