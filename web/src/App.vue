@@ -102,7 +102,7 @@ const agreed = ref(false)
 
 async function loadMp() {
    await loadMercadoPago();
-const mp = new window.MercadoPago("TEST-053c7167-3f04-43de-bd08-991b5974d34f", {
+const mp = new window.MercadoPago("TEST-2d557059-7588-4fd5-93c7-127edd70afb9", {
   locale: "es-AR",
 }); 
 
