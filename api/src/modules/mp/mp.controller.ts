@@ -55,9 +55,10 @@ const res = await preApproval.create({ body: {
  }
 
 @Post('webHookMP')
-async webhookMP(){
- return 'HELEOELHEOHEOHEO'
-}
+async webhookMP(req: Request) {
+    const payment = req.query;
+	console.log(payment)
+  }
 
  @Post('crearPlanMercadoPago')
  async crearPlanMercadoPago(@Body() data: planMp){
