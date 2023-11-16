@@ -58,7 +58,7 @@ const res = await preApproval.create({ body: {
 @Post('webHookMP')
 async webhookMP(@Req() req: RawBodyRequest<Request>){
 	const raw = req.rawBody; // returns a `Buffer`.
-	return raw
+	console.log(raw)
 }
 
  @Post('crearPlanMercadoPago')
