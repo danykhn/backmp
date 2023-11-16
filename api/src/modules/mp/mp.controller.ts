@@ -1,8 +1,8 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query, RawBodyRequest, Req  } from '@nestjs/common';
 import { Customer, MercadoPagoConfig, Payment, PreApproval, PreApprovalPlan }  from 'mercadopago';
 import { MP_ACCES_TOKEN  } from 'src/data/mpkey';
 import { mpFormData, planMp } from 'src/interfaces/mp.interface';
-
+import { Request } from 'express';
 
 const ACCES_TOK = 'APP_USR-7415360770932185-110116-c5fdac1e3f36dacad5bab749dfaf074b-1532962952'
 @Controller('mercadopago')
@@ -56,8 +56,9 @@ const res = await preApproval.create({ body: {
  }
 
 @Post('webHookMP')
-async webhookMP(){
- return `]HeLlLoHookk`
+async webhookMP(@Req() req: RawBodyRequest<Request>){
+	const raw = req.rawBody; // returns a `Buffer`.
+	return raw
 }
 
  @Post('crearPlanMercadoPago')
