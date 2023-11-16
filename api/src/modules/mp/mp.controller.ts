@@ -55,9 +55,12 @@ const res = await preApproval.create({ body: {
  }
 
 @Post('webHookMP')
-async webhookMP(@Param() params:[]) {
-    const payment = params;
-	console.log(payment)
+handleWebhookEvent(@Body() body: any) {
+    // Manejar el evento del Webhook de Mercado Pago
+    console.log('Evento recibido:', body);
+    // Implementa lógica para manejar el evento aquí
+
+    return { received: true };
   }
 
  @Post('crearPlanMercadoPago')
