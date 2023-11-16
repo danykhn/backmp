@@ -2,18 +2,14 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import type { NestExpressApplication } from '@nestjs/platform-express';
-
 const basicAuth = require('express-basic-auth');
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
-    rawBody: true,
-  });
+  const app = await NestFactory.create(AppModule);
   app.enableCors({
     credentials: true,
     methods: '*',
-    origin: ['https://s3.miclinicamedica.com.ar/', 'https://s3.miclinicamedica.com.ar/']
+   origin: ['https://s3.miclinicamedica.com.ar/', 'https://s3.miclinicamedica.com.ar/']
   });
   app.setGlobalPrefix('api');
    // SWAGGER
