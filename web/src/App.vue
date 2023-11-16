@@ -102,12 +102,12 @@ const agreed = ref(false)
 
 async function loadMp() {
    await loadMercadoPago();
-const mp = new window.MercadoPago("TEST-2d557059-7588-4fd5-93c7-127edd70afb9", {
+const mp = new window.MercadoPago("APP_USR-5e3ca949-9d41-472c-853f-ab200208422a", {
   locale: "es-AR",
 }); 
 
-const cardForm = mp.cardForm({
-      amount: "100.5",
+const cardForm =  mp.cardForm({
+      amount: "2333",
       iframe: true,
       form: {
         id: "form-checkout",
@@ -153,7 +153,7 @@ const cardForm = mp.cardForm({
           if (error) return console.warn("Form Mounted handling error: ", error);
           console.log("Form mounted");
         },
-        onSubmit: event => {
+        onSubmit: async event => {
           event.preventDefault();
 
           const {
@@ -166,8 +166,9 @@ const cardForm = mp.cardForm({
             identificationNumber,
             identificationType,
           } = cardForm.getCardFormData();
-
-      const createSuscrip = fetch("https://s3.miclinicamedica.com.ar/api/mercadopago/suscribirMercadoPago", {
+     
+       const a = fetch("https://s3.miclinicamedica.com.ar/api/mercadopago/suscribirMercadoPago", {
+        // const a = fetch("http://localhost:3075/api/mercadopago/suscribirMercadoPago", {  
             method: "POST",
             headers: {
               "Content-Type": "application/json",
@@ -179,8 +180,8 @@ const cardForm = mp.cardForm({
               transaction_amount: Number(amount),
               installments: Number(installments),
               description: "Descripción del producto",
-              //2c9380848bade276018bb4b524d1059a
-              preapproval_plan_id:'2c9380848b95ad8a018baa7c30980cc7',
+              //2c9380848b95ad95018baa510e4b0c45
+              preapproval_plan_id:'2c9380848b95ad95018baa510e4b0c45',
               payer: {
                 email,
                 identification: {
@@ -189,13 +190,14 @@ const cardForm = mp.cardForm({
                 },
               },
             }),
-          });
-          const data = createSuscrip.json 
-          console.log(data)
+          }).then( response => response.json())
+          .then(data => 
+          console.log(data))
+ 
         },
         onFetching: (resource) => {
           console.log("Fetching resource: ", resource);
-
+          console.log(resource)
           // Animate progress bar
           const progressBar = document.querySelector(".progress-bar");
           progressBar.removeAttribute("value");

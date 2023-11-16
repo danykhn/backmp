@@ -1,9 +1,9 @@
-import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, ParseIntPipe, Patch, Post, Put, Query } from '@nestjs/common';
 import { Customer, MercadoPagoConfig, Payment, PreApproval, PreApprovalPlan }  from 'mercadopago';
 import { MP_ACCES_TOKEN  } from 'src/data/mpkey';
 import { mpFormData, planMp } from 'src/interfaces/mp.interface';
 
-
+const ACCES_TOK = 'APP_USR-7415360770932185-110116-c5fdac1e3f36dacad5bab749dfaf074b-1532962952'
 @Controller('mercadopago')
 
 export class MercadoPagoController{
@@ -13,44 +13,7 @@ export class MercadoPagoController{
  @Post('payment')
  async payment(){
 console.log(MP_ACCES_TOKEN)
-const client = new MercadoPagoConfig({ accessToken: 'TEST-4978453771428718-111320-05d085111f6dc57fbd7afcb07fafc3e0-1547042141', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
-
-//#region crear contacto
-// const customerClient = new Customer(client);
-
-// const body = {
-// 	email: 'test_user_67446956@testuser.com',
-// 	first_name: 'Jhon',
-// 	last_name: 'Doe',
-// 	phone: {
-// 		area_code: '55',
-// 		number: '991234567'
-// 	},
-// 	identification: {
-// 		type: 'CPF',
-// 		number: '12345678900'
-// 	},
-// 	default_address: 'Home',
-// 	address: {
-// 		id: '123123',
-// 		zip_code: '4400',
-// 		street_name: 'Rua Exemplo',
-// 		street_number: 123,
-// 		city: {
-//          name:' Ciudad Autónoma de Buenos Aires'
-//       }
-// 	},
-// 	date_registered: '2021-10-20T11:37:30.000-04:00',
-// 	description: 'Description del user',
-// 	default_card: 'None'
-// };
-
-// const resp = await customerClient.create({ body })
-//     .then((result) => { console.log(result); })
-//     .catch((error) => { console.error(error); });
- //#endregion crear contacto
-
- //#region Crear Plan + fsuscribir (init_point)
+const client = new MercadoPagoConfig({ accessToken: ACCES_TOK, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 
  const preApprovalPlanGet = new PreApprovalPlan(client);
 
@@ -67,33 +30,39 @@ return respGet
  @Post('suscribirMercadoPago')
  async suscribirMercadoPago(@Body() data:mpFormData){
 console.log(data)
-	const client = new MercadoPagoConfig({ accessToken: 'TEST-4978453771428718-111320-05d085111f6dc57fbd7afcb07fafc3e0-1547042141', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+	const client = new MercadoPagoConfig({ accessToken: ACCES_TOK, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 	const preApproval = new PreApproval(client);
-
+let a = {}
 const res = await preApproval.create({ body: {	
 		preapproval_plan_id:data.preapproval_plan_id,
 		payer_email: data.payer.email,
 		card_token_id: data.token,
-		reason:'232',
+		reason:'232',	
 		auto_recurring: {
 			frequency: 12,
 			frequency_type: 'months',
-			transaction_amount: 12.34,
+			transaction_amount: data.transaction_amount,
 			currency_id: 'ARS',
 		},
-		back_url: 'http://localhost:9000/familiarGroups',
-		status:'authorized'
-	} }).then((r)=>{
-		return r
-	}).catch(console.log);	
+		back_url:'https://s3.miclinicamedica.com.ar/api/mercadopago/webHookMP',
 
-	return res
+
+	} }).then((r)=>{
+	a = r		
+	}).catch(console.log);	
+	console.log(a)
+	return a
  }
+
+@Post('webHookMP')
+async webhookMP(@Query('status') status:string){
+	return `Hee recived ${status}`
+}
 
  @Post('crearPlanMercadoPago')
  async crearPlanMercadoPago(@Body() data: planMp){
 
-	const client = new MercadoPagoConfig({ accessToken: 'TEST-4978453771428718-111320-05d085111f6dc57fbd7afcb07fafc3e0-1547042141', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+	const client = new MercadoPagoConfig({ accessToken: ACCES_TOK, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 
 	const preApprovalPlan = new PreApprovalPlan(client);
 	let datas = {}
@@ -116,7 +85,7 @@ const res = await preApproval.create({ body: {
 @Get('getPlansMercadoPago')
  async planesnMercadoPago(){
 	//Conexion
-	const client = new MercadoPagoConfig({ accessToken: 'TEST-4978453771428718-111320-05d085111f6dc57fbd7afcb07fafc3e0-1547042141', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+	const client = new MercadoPagoConfig({ accessToken: ACCES_TOK, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 	//Entidad
 	const preApprovalPlanGet = new PreApprovalPlan(client);
 
@@ -134,7 +103,7 @@ const res = await preApproval.create({ body: {
  @Put('editPlansMercadoPago')
  async editarPlanMercadoPago(){
 	//Conexion
-	const client = new MercadoPagoConfig({ accessToken: 'TEST-4978453771428718-111320-05d085111f6dc57fbd7afcb07fafc3e0-1547042141', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+	const client = new MercadoPagoConfig({ accessToken: ACCES_TOK, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 	//Entidad
 	const preApprovalPlanGet = new PreApprovalPlan(client);
 
@@ -158,7 +127,7 @@ const res = await preApproval.create({ body: {
 
  @Post('crearClienteMercadoPago')
  async crearCliente(){
-	const client = new MercadoPagoConfig({ accessToken: 'TEST-4978453771428718-111320-05d085111f6dc57fbd7afcb07fafc3e0-1547042141', options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+	const client = new MercadoPagoConfig({ accessToken: ACCES_TOK, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
 	const customerClient = new Customer(client);
 
 	const body = {
