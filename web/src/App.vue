@@ -168,7 +168,7 @@ const cardForm =  mp.cardForm({
           } = cardForm.getCardFormData();
      
        const a = fetch("https://s3.miclinicamedica.com.ar/api/mercadopago/suscribirMercadoPago", {
-        // const a = fetch("http://localhost:3075/api/mercadopago/suscribirMercadoPago", {  
+         //const a = fetch("http://localhost:3075/api/mercadopago/suscribirMercadoPago", {  
             method: "POST",
             headers: {
               "Content-Type": "application/json",

@@ -55,8 +55,8 @@ const res = await preApproval.create({ body: {
  }
 
 @Post('webHookMP')
-async webhookMP(req: Request) {
-    const payment = req;
+async webhookMP(@Param() params:[]) {
+    const payment = params;
 	console.log(payment)
   }
 
@@ -165,6 +165,19 @@ async webhookMP(req: Request) {
 		return resp
 	}
 
+	@Get('getPagosMercadoPago')
+	async getPagosMercadoPago(){
+		const client = new MercadoPagoConfig({ accessToken: ACCES_TOK, options: { timeout: 5000, idempotencyKey: '0d5020ed-1af6-469c-ae06-c3bec19954bb' } });
+		const payment = new Payment(client);
+
+	const resp = payment.search().then((result)=>{
+			console.log(result)
+		}).catch(console.log);
+
+		return resp
+	}
+		
+	
 
 }
 
