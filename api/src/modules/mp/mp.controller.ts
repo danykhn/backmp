@@ -3,6 +3,7 @@ import { Customer, MercadoPagoConfig, Payment, PreApproval, PreApprovalPlan }  f
 import { MP_ACCES_TOKEN  } from 'src/data/mpkey';
 import { mpFormData, planMp } from 'src/interfaces/mp.interface';
 
+
 const ACCES_TOK = 'APP_USR-7415360770932185-110116-c5fdac1e3f36dacad5bab749dfaf074b-1532962952'
 @Controller('mercadopago')
 
@@ -37,7 +38,7 @@ const res = await preApproval.create({ body: {
 		preapproval_plan_id:data.preapproval_plan_id,
 		payer_email: data.payer.email,
 		card_token_id: data.token,
-		reason:'232',	
+		reason:'232',		
 		auto_recurring: {
 			frequency: 12,
 			frequency_type: 'months',
@@ -45,7 +46,7 @@ const res = await preApproval.create({ body: {
 			currency_id: 'ARS',
 		},
 		back_url:'https://s3.miclinicamedica.com.ar/api/mercadopago/webHookMP',
-
+		
 
 	} }).then((r)=>{
 	a = r		
@@ -55,8 +56,13 @@ const res = await preApproval.create({ body: {
  }
 
 @Post('webHookMP')
-async webhookMP(@Query('status') status:string){
-	return `Hee recived ${status}`
+async webhookMP(
+	@Query('status') status:string,
+	@Query('id') id:string,
+	@Query('type') type:string){
+	console.log(status)
+	console.log(id)
+	console.log(type)
 }
 
  @Post('crearPlanMercadoPago')
