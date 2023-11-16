@@ -56,6 +56,7 @@ const res = await preApproval.create({ body: {
 
 @Post('webHookMP')
 async webhookMP(@Res() res: Response){
+	console.log(res.body)
 	return res.body
 }
 
