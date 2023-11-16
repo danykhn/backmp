@@ -56,7 +56,7 @@ const res = await preApproval.create({ body: {
 
 @Post('webHookMP')
 async webhookMP(req: Request) {
-    const payment = req.query;
+    const payment = req;
 	console.log(payment)
   }
 
