@@ -56,7 +56,7 @@ const res = await preApproval.create({ body: {
 
 @Post('webHookMP')
 async webhookMP(@Res() res: Response){
-	return res.formData
+	return res.body
 }
 
  @Post('crearPlanMercadoPago')
